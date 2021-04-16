@@ -1,0 +1,91 @@
+; Installation INF for the Narragansett Imaging Generic USB Driver for Windows 98ME/2000/XP
+;
+[Version]
+Signature="$CHICAGO$"
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+provider=%PROVIDER%
+
+[SourceDisksNames]
+1=%NIGENUSB_INSTALL%,,,
+
+[SourceDisksFiles]
+NiGenUsbME.sys = 1
+NiGenUsb.sys = 1
+NiGenUsb.spd = 1
+
+[Manufacturer]
+%MFGNAME%=Narragansett Imaging
+
+[Narragansett Imaging]
+; CYpress FX2LP/FX1 default ID
+%VID_04B4&PID_8613.DeviceDesc%=NiGenUsb, USB\VID_04B4&PID_8613
+
+; Cypress FX2LP Example Device.  DVK firmware examples use this VID/PID
+%VID_04B4&PID_1004.DeviceDesc%=NiGenUsb, USB\VID_04B4&PID_1004
+
+; Narragansett Imaging Ibis 6600 Camera
+%VID_0558&PID_1014.DeviceDesc%=NiGenUsb, USB\VID_0558&PID_1014
+
+; Narragansett Imaging Generic USB Device
+%VID_0558&PID_1015.DeviceDesc%=NiGenUsb, USB\VID_0558&PID_1015
+
+[DestinationDirs]
+NiGenUsbME.Files.Ext = 10,System32\Drivers
+NiGenUsb.Files.Ext = 10,System32\Drivers
+
+[NiGenUsb]
+CopyFiles=NiGenUsbME.Files.Ext
+AddReg=NiGenUsbME.AddReg
+
+[NiGenUsb.HW]
+AddReg=NiGenUsb.AddReg.Guid
+
+[NiGenUsb.NT]
+CopyFiles=NiGenUsb.Files.Ext
+AddReg=NiGenUsb.AddReg
+
+[NiGenUsb.NT.HW]
+AddReg=NiGenUsb.AddReg.Guid
+
+[NiGenUsb.NT.Services]
+Addservice = NiGenUsb, 0x00000002, NiGenUsb.AddService
+
+[NiGenUsb.AddService]
+DisplayName    = %NiGenUsb.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\NiGenUsb.sys
+LoadOrderGroup = Base
+
+[NiGenUsb.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,NiGenUsbME.sys
+
+[NiGenUsb.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,NiGenUsb.sys
+
+[NiGenUsbME.Files.Ext]
+NiGenUsbME.sys
+
+[NiGenUsb.Files.Ext]
+NiGenUsb.sys
+
+[NiGenUsb.AddReg.Guid]
+;HKR,,DriverGUID,,%NiGenUsb.GUID%
+
+;---------------------------------------------------------------;
+
+[Strings]
+PROVIDER="Narragansett Imaging"
+MFGNAME="Narragansett Imaging"
+NIGENUSB_INSTALL="Narragansett Imaging Generic USB Driver Installation Disk"
+VID_04B4&PID_8613.DeviceDesc="Cypress EZ-USB FX2LP/FX1 - EEPROM missing"
+VID_04B4&PID_1004.DeviceDesc="Cypress EZ-USB Example Device"
+VID_0558&PID_1014.DeviceDesc="Narragansett Ibis 6600 Camera"
+VID_0558&PID_1015.DeviceDesc="Narragansett Generic USB Device"
+
+NiGenUsb.SvcDesc="Narragansett Imaging USB Driver"
+NiGenUsb.GUID="{61157CFD-C984-4523-95B8-20D35D4138DD}"

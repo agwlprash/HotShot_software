@@ -1,0 +1,1 @@
+These drivers are for HotShot SC cameras ONly - Discontinued

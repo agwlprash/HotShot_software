@@ -1,0 +1,12 @@
+Indeo codec AVI's must be played from a local Drive. Microsoft blocks playing from remote network drives.
+
+If media player still won't play the indeo 5 AVI after install of Indeo5setup it’s possible you had the codec already installed, but the registry information wasn’t there
+If that’s the problem, run the registry editor. 
+Click start, run, regedit. 
+Navigate to the key 
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Drivers32 
+
+Make sure Drivers32 is selected on the left. On the right scroll down and look for an entry named vidc.iv50 
+If it’s not there then click edit, new string value. 
+Name it vidc.iv50 then double-click it and for value put ir50_32.dll 
